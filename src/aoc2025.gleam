@@ -2,39 +2,26 @@ import argv
 import day1
 import gleam/float
 import gleam/int
-import gleam/io
 import gleam/result
 import gleam/string
 import simplifile
 
 pub fn main() {
-  case run() {
-    Ok(_) -> io.println("Success!")
-    Error(error) -> io.println_error(error)
-  }
-}
-
-fn run() -> Result(String, String) {
   use day <- result.try(get_day_arg())
   use contents <- result.try(get_file_contents(day))
-  let result = case day {
+  run(day, contents)
+  Ok("Success")
+}
+
+fn run(day: String, contents: String) {
+  let lines = string.split(contents, "\n")
+  case day {
     "1" -> {
-      let lines = string.split(contents, "\n")
-      let #(p1, p2) = day1.run(lines)
-      Ok(int.to_string(p1) <> " " <> int.to_string(p2))
-      // let #(result, time_in_ms) = time(fn() { day1.run(lines) })
-      // io.println("Time taken: " <> float.to_string(time_in_ms) <> " ms")
-      // result
+      echo day1.run(lines)
+      Nil
     }
-    _ -> Error("This day has not yet been implemented")
+    _ -> Nil
   }
-
-  case result {
-    Ok(r) -> io.println("Result: " <> r)
-    Error(r) -> io.println_error("Something went wrong: " <> r)
-  }
-
-  Ok("Finished computation")
 }
 
 fn get_file_contents(day: String) {
