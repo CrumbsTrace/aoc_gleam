@@ -6,7 +6,6 @@ import gleam/string
 
 pub fn run(input: String) -> #(Int, Int) {
   let silly_numbers = generate_silly_numbers()
-  echo set.size(silly_numbers)
   input
   |> string.split(",")
   |> list.fold(#(0, 0), fn(acc, range) {
@@ -32,13 +31,16 @@ fn is_silly(v: Int) -> Bool {
   l == r
 }
 
-const max_size = 10
-
 fn generate_silly_numbers() -> set.Set(Int) {
   list.flat_map(list.range(1, 99_999), fn(v) {
     let v = int.to_string(v)
-    list.range(2, max_size / string.length(v))
-    |> list.map(fn(c) { string.repeat(v, c) |> int.parse() |> unwrap(0) })
+    case string.length(v) {
+      5 -> [unwrap(int.parse(v <> v), 0)]
+      4 -> [unwrap(int.parse(v <> v), 0)]
+      l ->
+        list.range(2, 10 / l)
+        |> list.map(fn(c) { string.repeat(v, c) |> int.parse() |> unwrap(0) })
+    }
   })
   |> set.from_list()
 }
