@@ -1,5 +1,6 @@
 import argv
 import day1
+import day2
 import gleam/float
 import gleam/int
 import gleam/result
@@ -18,6 +19,10 @@ fn run(day: String, contents: String) {
   case day {
     "1" -> {
       echo day1.run(lines)
+      Nil
+    }
+    "2" -> {
+      echo day2.run(contents)
       Nil
     }
     _ -> Nil
