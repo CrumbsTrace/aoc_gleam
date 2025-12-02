@@ -18,11 +18,13 @@ fn run(day: String, contents: String) {
   let lines = string.split(contents, "\n")
   case day {
     "1" -> {
-      echo day1.run(lines)
+      echo bench(fn() { day1.run(lines) })
+      // echo day1.run(lines)
       Nil
     }
     "2" -> {
-      echo day2.run(contents)
+      // echo day2.run(contents)
+      echo bench(fn() { day2.run(contents) })
       Nil
     }
     _ -> Nil
@@ -56,7 +58,7 @@ fn erlang_monotonic_time(unit: Int) -> Int
 pub fn time(f: fn() -> a) -> #(a, Float) {
   let start = erlang_monotonic_time(1_000_000)
   let result = f()
-  repeat(99, fn() {
+  repeat(19, fn() {
     f()
     Nil
   })
@@ -64,7 +66,7 @@ pub fn time(f: fn() -> a) -> #(a, Float) {
 
   #(
     result,
-    float.to_precision({ int.to_float(stop - start) /. 1000.0 } /. 100.0, 3),
+    float.to_precision({ int.to_float(stop - start) /. 1000.0 } /. 20.0, 3),
   )
 }
 
@@ -76,4 +78,10 @@ fn repeat(n: Int, f: fn() -> Nil) -> Nil {
       repeat(n - 1, f)
     }
   }
+}
+
+pub fn bench(f: fn() -> a) -> a {
+  let #(result, time) = time(f)
+  echo "Time taken: " <> float.to_string(time) <> " ms"
+  result
 }

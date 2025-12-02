@@ -1,4 +1,5 @@
 import day1
+import day2
 import gleam/result.{unwrap}
 import gleam/string
 import gleeunit
@@ -16,9 +17,19 @@ pub fn day1_test() {
   should.equal(result, #(1135, 6558))
 }
 
-fn get_lines(file) {
+pub fn day2_test() {
+  let input = get_contents("inputs/day2.txt")
+  let result = day2.run(input)
+  should.equal(result, #(22_062_284_697, 46_666_175_279))
+}
+
+fn get_contents(file) {
   simplifile.read(file)
   |> unwrap("")
   |> string.trim()
+}
+
+fn get_lines(file) {
+  get_contents(file)
   |> string.split("\n")
 }

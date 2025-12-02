@@ -1,9 +1,11 @@
 import gleam/int
 import gleam/list
 import gleam/result.{unwrap}
+import gleam/set.{type Set}
 import gleam/string
 
 pub fn run(input: String) -> #(Int, Int) {
+  let silly_numbers = generate_silly_numbers()
   input
   |> string.split(",")
   |> list.fold(#(0, 0), fn(acc, range) {
@@ -13,10 +15,10 @@ pub fn run(input: String) -> #(Int, Int) {
         let min = int.parse(l) |> unwrap(0)
         let max = int.parse(r) |> unwrap(0)
         let numbers = list.range(min, max)
-        #(
-          p1 + { list.filter(numbers, is_silly) |> int.sum() },
-          p2 + { list.filter(numbers, is_super_silly) |> int.sum() },
-        )
+        let p2_nums =
+          list.filter(numbers, fn(v) { set.contains(silly_numbers, v) })
+        let p1_nums = list.filter(p2_nums, is_silly)
+        #(p1 + { p1_nums |> int.sum() }, p2 + { p2_nums |> int.sum() })
       }
       _ -> #(p1, p2)
     }
@@ -31,26 +33,13 @@ fn is_silly(v: Int) -> Bool {
   l == r
 }
 
-fn is_super_silly(v: Int) -> Bool {
-  case v {
-    v if v < 10 -> False
-    _ -> {
-      let v = int.to_string(v) |> string.to_graphemes()
-      let length = list.length(v)
-      let half_length = list.length(v) / 2
-      let chunk_sizes = list.range(1, half_length)
+const max_size = 10
 
-      chunk_sizes
-      |> list.any(fn(chunk_size) {
-        length % chunk_size == 0
-        && {
-          v
-          |> list.sized_chunk(chunk_size)
-          |> list.unique()
-          |> list.length()
-        }
-        == 1
-      })
-    }
-  }
+fn generate_silly_numbers() -> Set(Int) {
+  list.flat_map(list.range(1, 99_999), fn(v) {
+    let v = int.to_string(v)
+    list.range(2, max_size / string.length(v))
+    |> list.map(fn(c) { string.repeat(v, c) |> int.parse() |> unwrap(0) })
+  })
+  |> set.from_list()
 }
