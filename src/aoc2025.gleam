@@ -1,6 +1,7 @@
 import argv
 import day1
 import day2
+import day3
 import gleam/float
 import gleam/int
 import gleam/result
@@ -18,13 +19,18 @@ fn run(day: String, contents: String) {
   let lines = string.split(contents, "\n")
   case day {
     "1" -> {
-      echo bench(fn() { day1.run(lines) })
-      // echo day1.run(lines)
+      // echo bench(fn() { day1.run(lines) })
+      echo day1.run(lines)
       Nil
     }
     "2" -> {
-      // echo day2.run(contents)
-      echo bench(fn() { day2.run(contents) })
+      echo day2.run(contents)
+      // echo bench(fn() { day2.run(contents) })
+      Nil
+    }
+    "3" -> {
+      // echo day3.run(lines)
+      echo bench(fn() { day3.run(lines) })
       Nil
     }
     _ -> Nil
