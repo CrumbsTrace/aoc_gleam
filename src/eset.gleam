@@ -17,3 +17,9 @@ pub fn size(set: Set(a)) -> Int
 
 @external(erlang, "sets", "union")
 pub fn union(set1: Set(a), set2: Set(a)) -> Set(a)
+
+@external(erlang, "sets", "fold")
+pub fn fold(f: fn(a, b) -> b, acc: b, set: Set(a)) -> b
+
+@external(erlang, "sets", "subtract")
+pub fn difference(set1: Set(a), set2: Set(a)) -> Set(a)
