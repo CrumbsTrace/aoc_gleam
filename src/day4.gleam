@@ -63,14 +63,12 @@ fn count_rolls(
   newly_removed: set.Set(#(Int, Int)),
   p1: Bool,
 ) -> Int {
-  list.fold(list.range(-1, 1), 0, fn(r_acc, dy) {
-    list.fold(list.range(-1, 1), r_acc, fn(c_acc, dx) {
+  list.fold(list.range(y - 1, y + 1), 0, fn(r_acc, ny) {
+    list.fold(list.range(x - 1, x + 1), r_acc, fn(c_acc, nx) {
       // Quit early cause we're already over the limit
       case c_acc > 4 {
         True -> c_acc
         False -> {
-          let nx = x + dx
-          let ny = y + dy
           case
             set.contains(#(nx, ny), remaining_rolls)
             || { !p1 && set.contains(#(nx, ny), newly_removed) }
