@@ -2,6 +2,7 @@ import day1
 import day2
 import day3
 import day4
+import day5
 import gleam/result.{unwrap}
 import gleam/string
 import gleeunit
@@ -35,6 +36,12 @@ pub fn day4_test() {
   let input = get_lines("inputs/day4.txt")
   let result = day4.run(input)
   should.equal(result, #(1395, 8451))
+}
+
+pub fn day5_test() {
+  let input = get_lines("inputs/day5.txt")
+  let result = day5.run(input)
+  should.equal(result, #(798, 366_181_852_921_027))
 }
 
 fn get_contents(file) {
