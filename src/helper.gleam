@@ -29,24 +29,6 @@ fn split_whitespace_inner(chars: List(String)) {
   }
 }
 
-pub fn zip4(w, x, y, z) {
-  case w, x, y, z {
-    [v1, ..t_w], [v2, ..t_x], [v3, ..t_y], [v4, ..t_z] -> {
-      [#(v1, v2, v3, v4), ..zip4(t_w, t_x, t_y, t_z)]
-    }
-    _, _, _, _ -> []
-  }
-}
-
-pub fn zip5(v, w, x, y, z) {
-  case v, w, x, y, z {
-    [v1, ..t_v], [v2, ..t_w], [v3, ..t_x], [v4, ..t_y], [v5, ..t_z] -> {
-      [#(v1, v2, v3, v4, v5), ..zip5(t_v, t_w, t_x, t_y, t_z)]
-    }
-    _, _, _, _, _ -> []
-  }
-}
-
 pub fn parse(v: String) {
   result.unwrap(int.parse(v), 0)
 }
