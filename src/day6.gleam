@@ -1,7 +1,7 @@
 import gleam/int
 import gleam/list
 import gleam/result.{unwrap}
-import gleam/string.{join, trim}
+import gleam/string.{concat, trim}
 import helper.{parse, split_whitespace}
 
 pub fn run(lines: List(String)) -> #(Int, Int) {
@@ -18,7 +18,7 @@ pub fn run(lines: List(String)) -> #(Int, Int) {
     |> list.transpose()
     |> list.chunk(fn(v) { list.all(v, fn(c) { c == " " }) })
     |> list.filter_map(fn(v) {
-      let numbers = list.filter_map(v, fn(v) { int.parse(trim(join(v, ""))) })
+      let numbers = list.filter_map(v, fn(v) { int.parse(trim(concat(v))) })
       case numbers {
         [] -> Error(Nil)
         v -> Ok(v)

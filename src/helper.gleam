@@ -23,7 +23,7 @@ fn split_whitespace_inner(chars: List(String)) {
     [] -> []
     _ -> {
       let #(value, rest) = list.split_while(chars, fn(c) { c != " " })
-      let value = string.join(value, "")
+      let value = string.concat(value)
       [value, ..split_whitespace_inner(rest)]
     }
   }

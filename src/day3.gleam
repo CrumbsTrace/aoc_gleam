@@ -10,8 +10,8 @@ pub fn run(lines: List(String)) -> #(Int, Int) {
     let #(p1, p2) = acc
     let length = string.length(line)
     let chars = string.to_graphemes(line)
-    let r1 = string.join(raid_bank(chars, 2, length), "")
-    let r2 = string.join(raid_bank(chars, 12, length), "")
+    let r1 = string.concat(raid_bank(chars, 2, length))
+    let r2 = string.concat(raid_bank(chars, 12, length))
     #(p1 + unwrap(int.parse(r1), 0), p2 + unwrap(int.parse(r2), 0))
   })
 }
