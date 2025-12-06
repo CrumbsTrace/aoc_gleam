@@ -18,7 +18,7 @@ pub fn run(lines: List(String)) -> #(Int, Int) {
     |> list.transpose()
     |> helper.chunk_by_map(
       by: fn(v) { list.all(v, fn(c) { c == " " }) },
-      map: fn(v) { list.map(v, fn(v2) { parse(trim(concat(v2))) }) },
+      map: fn(v) { parse(trim(concat(v))) },
     )
 
   let p1 = solve(p1_numbers, ops)

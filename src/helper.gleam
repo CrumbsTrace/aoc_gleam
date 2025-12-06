@@ -33,13 +33,13 @@ pub fn parse(v: String) {
   result.unwrap(int.parse(v), 0)
 }
 
-pub fn chunk_by_map(l: List(a), by f: fn(a) -> Bool, map m: fn(List(a)) -> b) {
+pub fn chunk_by_map(l: List(a), by f: fn(a) -> Bool, map m: fn(a) -> b) {
   let l = list.drop_while(l, f)
   case l {
     [] -> []
     _ -> {
       let #(v, ts) = list.split_while(l, fn(v) { !f(v) })
-      [m(v), ..chunk_by_map(ts, f, m)]
+      [list.map(v, m), ..chunk_by_map(ts, f, m)]
     }
   }
 }
