@@ -6,14 +6,14 @@ import helper.{parse, split_whitespace}
 
 pub fn run(lines: List(String)) -> #(Int, Int) {
   let ops = unwrap(list.last(lines), "") |> split_whitespace()
+  let number_lines = list.take(lines, list.length(lines) - 1)
   let p1_numbers =
-    list.take(lines, list.length(lines) - 1)
+    number_lines
     |> list.map(fn(v) { split_whitespace(v) |> list.map(parse) })
     |> list.transpose()
 
   let p2_numbers =
-    lines
-    |> list.take(list.length(lines) - 1)
+    number_lines
     |> list.map(string.to_graphemes)
     |> list.transpose()
     |> list.chunk(fn(v) { list.all(v, fn(c) { c == " " }) })
