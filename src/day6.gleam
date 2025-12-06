@@ -9,7 +9,7 @@ pub fn run(lines: List(String)) -> #(Int, Int) {
   let number_lines = list.take(lines, list.length(lines) - 1)
   let p1_numbers =
     number_lines
-    |> list.map(fn(v) { split_whitespace(v) |> list.map(parse) })
+    |> list.map(fn(v) { helper.take_ints(v, " ") })
     |> list.transpose()
 
   let p2_numbers =
