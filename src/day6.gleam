@@ -16,14 +16,10 @@ pub fn run(lines: List(String)) -> #(Int, Int) {
     number_lines
     |> list.map(string.to_graphemes)
     |> list.transpose()
-    |> list.chunk(fn(v) { list.all(v, fn(c) { c == " " }) })
-    |> list.filter_map(fn(v) {
-      let numbers = list.filter_map(v, fn(v) { int.parse(trim(concat(v))) })
-      case numbers {
-        [] -> Error(Nil)
-        v -> Ok(v)
-      }
-    })
+    |> helper.chunk_by_map(
+      by: fn(v) { list.all(v, fn(c) { c == " " }) },
+      map: fn(v) { list.map(v, fn(v2) { parse(trim(concat(v2))) }) },
+    )
 
   let p1 = solve(p1_numbers, ops)
   let p2 = solve(p2_numbers, ops)
