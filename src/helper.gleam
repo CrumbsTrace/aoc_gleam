@@ -71,3 +71,23 @@ pub fn chunk_fold(
     }
   }
 }
+
+pub fn find_index(l: List(a), pred: fn(a) -> Bool) {
+  case l {
+    [v, ..ts] ->
+      case pred(v) {
+        True -> 0
+        False -> 1 + find_index(ts, pred)
+      }
+    _ -> 0
+  }
+}
+
+pub fn find_indices(l: List(a), pred: fn(a) -> Bool) {
+  list.index_fold(l, [], fn(acc, v, i) {
+    case pred(v) {
+      True -> [i, ..acc]
+      False -> acc
+    }
+  })
+}

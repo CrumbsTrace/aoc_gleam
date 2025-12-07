@@ -5,6 +5,7 @@ import day3
 import day4
 import day5
 import day6
+import day7
 import gleam/float
 import gleam/int
 import gleam/result
@@ -49,6 +50,11 @@ fn run(day: String, contents: String) {
     "6" -> {
       // echo day6.run(lines)
       echo bench(fn() { day6.run(lines) })
+      Nil
+    }
+    "7" -> {
+      // echo day7.run(lines)
+      echo bench(fn() { day7.run(lines) })
       Nil
     }
     _ -> Nil
