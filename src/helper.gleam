@@ -73,13 +73,17 @@ pub fn chunk_fold(
 }
 
 pub fn find_index(l: List(a), pred: fn(a) -> Bool) {
-  case l {
-    [v, ..ts] ->
+  let index =
+    list.fold_until(l, 0, fn(acc, v) {
       case pred(v) {
-        True -> 0
-        False -> 1 + find_index(ts, pred)
+        True -> list.Stop(acc)
+        False -> list.Continue(acc + 1)
       }
-    _ -> 0
+    })
+
+  case list.length(l) == index {
+    True -> -1
+    False -> index
   }
 }
 
