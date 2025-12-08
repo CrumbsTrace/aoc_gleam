@@ -22,6 +22,7 @@ pub fn run(lines: List(String)) {
       #(v, x_dist * x_dist + y_dist * y_dist + z_dist * z_dist)
     })
     |> list.sort(fn(l, r) { int.compare(pair.second(l), pair.second(r)) })
+    |> list.map(pair.first)
 
   let p1 =
     pairs
@@ -46,7 +47,7 @@ pub fn run(lines: List(String)) {
 
 fn connect(connections, circuit_count) {
   list.fold_until(connections, [], fn(groups, connection) {
-    let #(c1, c2) = pair.first(connection)
+    let #(c1, c2) = connection
     let c1_find_result =
       list.find(groups, fn(v) { set.contains(c1, pair.second(v)) })
     let c2_find_result =
