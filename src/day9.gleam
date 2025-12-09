@@ -54,13 +54,11 @@ fn is_inside_polygon(rectangle, horizontal, vertical) {
   let ymin = int.min(y1, y2)
   let ymax = int.max(y1, y2)
 
-  !intersects(ymin, False, xmin, xmax, vertical)
-  && !intersects(ymax, True, xmin, xmax, vertical)
-  && !intersects(xmin, False, ymin, ymax, horizontal)
-  && !intersects(xmax, True, ymin, ymax, horizontal)
+  !intersects(ymin, ymax, xmin, xmax, vertical)
+  && !intersects(xmin, xmax, ymin, ymax, horizontal)
 }
 
-fn intersects(c, c_is_max, pmin, pmax, segments) {
+fn intersects(cmin, cmax, pmin, pmax, segments) {
   case segments {
     [#(c_seg, #(left, right)), ..ts] -> {
       //Check if they intersect
@@ -68,8 +66,7 @@ fn intersects(c, c_is_max, pmin, pmax, segments) {
         c_seg > pmin
         && c_seg < pmax
         && {
-          { c_is_max && c > left && c <= right }
-          || { !c_is_max && c >= left && c < right }
+          { cmax > left && cmax <= right } || { cmin >= left && cmin < right }
         }
       {
         True -> True
@@ -77,7 +74,7 @@ fn intersects(c, c_is_max, pmin, pmax, segments) {
           // Since the segments are sorted. Once we've passed pmax no future segment would pass the test
           case c_seg >= pmax {
             True -> False
-            False -> intersects(c, c_is_max, pmin, pmax, ts)
+            False -> intersects(cmin, cmax, pmin, pmax, ts)
           }
       }
     }
