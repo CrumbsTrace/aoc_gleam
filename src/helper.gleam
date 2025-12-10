@@ -95,3 +95,12 @@ pub fn find_indices(l: List(a), pred: fn(a) -> Bool) {
     }
   })
 }
+
+pub fn int_power(v: Int, power: Int) {
+  case power {
+    0 -> 1
+    1 -> v
+    2 -> v * v
+    _ -> v * int_power(v, power - 1)
+  }
+}
