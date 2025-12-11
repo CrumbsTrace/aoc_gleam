@@ -1,6 +1,7 @@
 import argv
 import day1
 import day10
+import day11
 import day2
 import day3
 import day4
@@ -73,6 +74,11 @@ fn run(day: String, contents: String) {
     "10" -> {
       echo day10.run(lines)
       // echo bench(fn() { day10.run(lines) })
+      Nil
+    }
+    "11" -> {
+      echo day11.run(lines)
+      // echo bench(fn() { day11.run(lines) })
       Nil
     }
     _ -> Nil
