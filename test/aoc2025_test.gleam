@@ -1,6 +1,7 @@
 import day1
 import day10
 import day11
+import day12
 import day2
 import day3
 import day4
@@ -84,6 +85,12 @@ pub fn day11_test() {
   let input = get_lines("inputs/day11.txt")
   let result = day11.run(input)
   should.equal(result, #(791, 520_476_725_037_672))
+}
+
+pub fn day12_test() {
+  let input = get_lines("inputs/day12.txt")
+  let result = day12.run(input)
+  should.equal(result, 443)
 }
 
 fn get_contents(file) {
